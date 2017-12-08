@@ -1,0 +1,39 @@
+{
+    "visualization" : "CodeCity",
+    "name"          : "Cyclomatic Complexity",
+    "data"          : [
+        {
+            "id"       : "1",
+            "type"     : "scope",
+            "children" : [
+                {
+                    "id"     : "2",
+                    "type"   : "block",
+                    "width"  : 20,
+                    "height" : 1,
+                    "value"  : 3
+                },
+                {
+                    "id"     : "3",
+                    "type"   : "block",
+                    "width"  : 10,
+                    "height" : 100,
+                    "value"  : 2
+                },
+                {
+                    "id"       : "4",
+                    "type"     : "scope",
+                    "children" : [
+                        {
+                            "id"     : "5",
+                            "type"   : "block",
+                            "width"  : 5,
+                            "height" : 23,
+                            "value"  : 10
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
