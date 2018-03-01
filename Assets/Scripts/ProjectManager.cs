@@ -7,6 +7,11 @@ public class ProjectManager : MonoBehaviour {
 
     public ButtonCreator buttonCreator;
 
+
+    /* * * Start-Function
+     * Starts when the Scene is built
+     * Load all URLs of the Projects on the Website and load them into a Root-Object
+     * */
     [RuntimeInitializeOnLoadMethod]
     IEnumerator Start()
     {
@@ -26,36 +31,49 @@ public class ProjectManager : MonoBehaviour {
             Root startProject = ProcessStart(myUrl.text);
             Debug.Log(startProject.projects[0].href);
             //for (int i = 0; i < startProject.projects.Length; i += 1) {
-               StartCoroutine( GetUrl(startProject.projects[0].href));
+               StartCoroutine( GetUrlForJsonProject(startProject.projects[0].href));
             //}
             //Debug.Log(projectList[0].name);
         }
     }
 
-    IEnumerator GetUrl(string myUrl) {
+    /* * * GetUrlForJsonProject-Function
+     * Create an actual WWW Object from the URL given on the Root Object
+     * */
+    IEnumerator GetUrlForJsonProject(string myUrl) {
         WWW newUrl = new WWW(myUrl);
         yield return newUrl;
         Debug.Log(newUrl.text);
         LoadProjects(newUrl);
     }
 
+    /* * * LoadProjects-Function
+     * Create a JsonProject-Object from a given File on the Internet
+     * Start the Function to create a button of that JsonProject-File
+     */
+
     void LoadProjects(WWW url) {
         JsonProject jsonProjectToLoad = ProcessJson(url.text);
-        /*projectList[counter] = new ProjectList(jsonProject);
-        counter +=  1;
+        //projectList[counter] = new ProjectList(jsonProject);
         //Debug.Log(projectList[0].name);
 
-        Debug.Log(counter);*/
         Debug.Log(jsonProjectToLoad.name);
         buttonCreator.createButtons(jsonProjectToLoad);
     }
-
-        private JsonProject ProcessJson(string jsonString)
+    
+    /* * * ProcessJson-Function
+     * Deserialize a JsonFile into a JsonProject-Object
+     */
+    private JsonProject ProcessJson(string jsonString)
     {
         JsonProject parsejson = JsonUtility.FromJson<JsonProject>(jsonString);
         return parsejson;
     }
 
+
+    /* * * ProcessStart-Function
+     * Deserialize a JsonFile into a Root-Object
+     */
     private Root ProcessStart(string jsonString)
     {
         Root startProject = JsonUtility.FromJson<Root>(jsonString);
@@ -63,10 +81,3 @@ public class ProjectManager : MonoBehaviour {
     }
 }
 
-public class ProjectList {
-    public JsonProject project;
-
-    public ProjectList(JsonProject jsonProject) {
-        project = jsonProject;
-    }
-}

@@ -8,16 +8,26 @@ public class ButtonCreator : MonoBehaviour {
 
     public GameObject menu;
     public Button prefab;
-    public Text text;
-    
+    public CityBuilder cityBuilder;
+
+
+    /* * * CreateButtons-Function
+     * Create a Button from a Json Project - setting the Text of the Button to the name of the project.
+     * Fix the transform of that new Button.
+     * Add a function to build up the CodeCity out of that project when the Button is pressed.
+     * */ 
+
+
     public void createButtons(JsonProject projectToCreateButtonOf)
     {
         Button mybutton = Instantiate(prefab);
-        mybutton.GetComponentInChildren<Text>().text = projectToCreateButtonOf.name;
-        //Text myText = Instantiate(text);
         mybutton.transform.SetParent(menu.transform);
-        /*myText.transform.SetParent(mybutton.transform);
-        myText.text = projectToCreateButtonOf.name;*/
-
+        mybutton.GetComponentInChildren<Text>().text = projectToCreateButtonOf.name;
+        mybutton.transform.localScale = new Vector3((float)0.5, (float)0.5, (float)0.5);
+        mybutton.transform.localPosition = new Vector3(-5, 16, (float)-0.01);
+        mybutton.transform.localRotation = new Quaternion(0,0,0,0);
+        //mybutton.onClick = cityBuilder.buildCity(projectToCreateButoonOf)  ; Add function here to build the CodeCity
+        StartCoroutine(cityBuilder.BuildCodeCity(projectToCreateButtonOf));
+        //Debug.Log(" Hello");
     }
 }
